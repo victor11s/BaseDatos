@@ -250,3 +250,14 @@ END //
 DELIMITER ;
 /*Llamarlo*/
 CALL productosBarco();
+/**/
+DELIMITER $$
+CREATE PROCEDURE Paginador(
+INOUT contador INT,
+IN incremento INT) #lo que le voy a incrementar
+BEGIN
+SET contador=contador+incremento;
+END $$
+DELIMITER ;
+CALL Paginador(@contador,1);
+SELECT @contador;

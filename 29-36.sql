@@ -1,18 +1,16 @@
-/*29.¿Qué clientes tienen un dígito en su nombre? -checar si algun cliente tiene un digito en su nombre-FALLA EL OUT*/
+/*29.¿Qué clientes tienen un dígito en su nombre?*/
 DELIMITER //
-CREATE PROCEDURE clientesCon1Digito(
-IN digito INT,
-OUT cliente VARCHAR(50)
+CREATE PROCEDURE clientesConDigitoEn(
+IN nombre VARCHAR(50)
 )
 BEGIN
-SELECT customerName into cliente
+SELECT customerName
 FROM customers
-WHERE customerName LIKE CONCAT('%', digito, '%');
+WHERE customerName LIKE CONCAT('%', nombre, '%');
 END //
 DELIMITER ;
 /*Llamarlo*/
-CALL clientesCon1Digito(1, @cliente);
-SELECT @cliente as 'Cliente';
+CALL clientesConDigitoEn('4');
 
 /*30.Liste los nombres y apellidos de los empleados llamados */
 DELIMITER //
@@ -95,7 +93,7 @@ DELIMITER ;
 /*Llamarlo*/
 CALL empleadosConNombre3('Diecast');
 
-/*36.Para pedidos que contengan más de dos productos, muestre aquellos productos que constituyan más del 50% del valor del pedido--NO PUDE HACERLO*/
+/*36.Para pedidos que contengan más de dos productos, muestre aquellos productos que constituyan más del 50% del valor del pedido*/
 DELIMITER //
 CREATE PROCEDURE productosConMasDel50PorcientoDelValorDelPedido()
 BEGIN

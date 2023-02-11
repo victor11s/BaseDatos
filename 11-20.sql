@@ -9,16 +9,20 @@ DELIMITER ;
 /*Llamarlo*/
 CALL margenBeneficio();
 
-/*12.Cuántos productos distintos vende classicmodels*/
+/*12.Cuántos productos distintos vende classicmodels, lo cambie parea usar out*/
 DELIMITER //
-CREATE PROCEDURE productoClassic()
+CREATE PROCEDURE productosDistintos(
+OUT cantidad INT
+)
 BEGIN
-SELECT COUNT(DISTINCT productCode) AS 'Total de productos'
+SELECT COUNT(DISTINCT productCode) INTO cantidad
 FROM products;
 END //
 DELIMITER ;
 /*Llamarlo*/
-CALL productoClassic();
+CALL productosDistintos(@cantidad);
+SELECT @cantidad;
+
 
 /*13.Muestre el nombre y la ciudad de los clientes que no tienen representantes de ventas.*/
 DELIMITER //
@@ -100,7 +104,7 @@ DELIMITER ;
 CALL pagosTotalesDe('Atelier graphique');
 
 
-/*19.Muestre los pagos totales en cada fecha que se haya realizo una venta DUDA DE SI ES POR CADA FECHA LISTAR LOS PAGOS*/
+/*19.Muestre los pagos totales en cada fecha que se haya realizo una venta /
 DELIMITER //
 CREATE PROCEDURE pagosTotalesPorCadaFecha()
 BEGIN

@@ -111,12 +111,33 @@ CALL paymentsMin();
 
 /*10.Enumere todos los pagos mayores que el doble de la cantidad promedio*/
 DELIMITER //
-CREATE PROCEDURE pagosMayoresPromedio()
+CREATE PROCEDURE pagosMayoresPromedio1(
+    INOUT contador INT
+)
 BEGIN
-SELECT customerNumber, checkNumber, amount
+
+SET contador = contador + 1;
+
+SELECT customerNumber, checkNumber, amount, contador
 FROM payments
 WHERE amount > (SELECT AVG(amount) FROM payments) * 2;
 END //
 DELIMITER ;
 /*Llamarlo*/
-CALL pagosMayoresPromedio();
+CALL pagosMayoresPromedio1();
+
+/*10 NUEVO*/
+DELIMITER //
+CREATE PROCEDURE pagosMayoresPromedio5(INOUT contador INT)
+BEGIN
+
+SET contador = contador + 1;
+
+SELECT contador, customerNumber, checkNumber, amount
+FROM payments
+WHERE amount > (SELECT AVG(amount) FROM payments) * 2;
+END //
+DELIMITER ;
+/*Llamarlo*/
+SET @contador = 0;
+CALL pagosMayoresPromedio5(@contador);

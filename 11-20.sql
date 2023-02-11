@@ -9,7 +9,7 @@ DELIMITER ;
 /*Llamarlo*/
 CALL margenBeneficio();
 
-/*12.Cuántos productos distintos vende classicmodels, con duda*/
+/*12.Cuántos productos distintos vende classicmodels*/
 DELIMITER //
 CREATE PROCEDURE productoClassic()
 BEGIN
@@ -44,7 +44,7 @@ DELIMITER ;
 /*Llamarlo*/
 CALL employeesWithVPorManager();
 
-/*15.Qué pedidos tienen un valor superior a $ 5,000, usar stored procedure in */
+/*15.Qué pedidos tienen un valor superior a $ 5,000 */
 DELIMITER //
 CREATE PROCEDURE ordenesMayoresDeDinero(
 IN monto DECIMAL(10,2)
@@ -112,7 +112,7 @@ DELIMITER ;
 /*Llamarlo*/
 CALL pagosTotalesPorCadaFecha();
 
-/*20.Mostrar los productos que no han sido vendidos usando OUT  de salida.*/
+/*20.Mostrar los productos que no han sido vendidos.*/
 DELIMITER //
 CREATE PROCEDURE productosNoVendidos()
 BEGIN

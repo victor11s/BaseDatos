@@ -239,3 +239,14 @@ CALL productosNoVendidos();
 
 
 
+/*26. Liste los productos que terminan en 'barco'.*/
+DELIMITER //
+CREATE PROCEDURE productosBarco()
+BEGIN
+SELECT productName
+FROM products
+WHERE productName LIKE '%boat%';
+END //
+DELIMITER ;
+/*Llamarlo*/
+CALL productosBarco();

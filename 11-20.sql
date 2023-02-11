@@ -123,3 +123,15 @@ END //
 DELIMITER ;
 /*Llamarlo*/
 CALL productosNoVendidos();
+
+/*23.Liste los productos pedidos un lunes.*/
+DELIMITER //
+CREATE PROCEDURE productosPedidosUnLunes()
+BEGIN
+SELECT productName
+FROM products, orders, orderdetails
+WHERE products.productCode = orderdetails.productCode and orderdetails.orderNumber = orders.orderNumber and DAYNAME(orderDate) = 'Monday';
+END //
+DELIMITER ;
+/*Llamarlo*/
+CALL productosPedidosUnLunes();

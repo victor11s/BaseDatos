@@ -104,7 +104,7 @@ DELIMITER ;
 CALL pagosTotalesDe('Atelier graphique');
 
 
-/*19.Muestre los pagos totales en cada fecha que se haya realizo una venta /
+/*19.Muestre los pagos totales en cada fecha que se haya realizo una venta */
 DELIMITER //
 CREATE PROCEDURE pagosTotalesPorCadaFecha()
 BEGIN

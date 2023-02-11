@@ -34,15 +34,17 @@ CALL pagosTotal();
 
 /*4.Enumere las lineas de productos que contienen automoviles*/
 DELIMITER //
-CREATE PROCEDURE carroList()
+CREATE PROCEDURE carroLista()
 BEGIN
-SELECT productLine
+SET @row_number = 0;
+SELECT (@row_number:=@row_number + 1) AS row_number, productLine
 FROM productlines
-WHERE textDescription LIKE '%car%';
+WHERE textDescription LIKE '%car%'
+ORDER BY productLine;
 END //
 DELIMITER ;
 /*Llamarlo*/
-CALL carroList();
+CALL carroLista();
 
 /*5.Informar pagos totales al 28 de octubre de 2004, es decir hasta esa fecha cuanto se ha pagado*/
 DELIMITER //
@@ -74,16 +76,18 @@ DELIMITER ;
 CALL pagosMayoresque(100000);
 
 /*7.Enumere los productos de cada linea de productos*/
+
 DELIMITER //
-CREATE PROCEDURE listaProductosLinea()
+CREATE PROCEDURE listaProductosPorLinea()
 BEGIN
-SELECT productLine, productName
+SET @row_number = 0;
+SELECT (@row_number:=@row_number + 1) AS id, productLine, productName
 FROM products
 ORDER BY productLine;
 END //
 DELIMITER ;
 /*Llamarlo*/
-CALL listaProductosLinea();
+CALL listaProductosPorLinea();
 
 
 /*8.Cuantos productos en cada linea de productos*/
@@ -109,35 +113,16 @@ DELIMITER ;
 /*Llamarlo*/
 CALL paymentsMin();
 
-/*10.Enumere todos los pagos mayores que el doble de la cantidad promedio*/
+/*10.Enumere todos los pagos mayores que el doble de la cantidad promedio */
 DELIMITER //
-CREATE PROCEDURE pagosMayoresPromedio1(
-    INOUT contador INT
-)
+CREATE PROCEDURE pagosPromedioEnu()
 BEGIN
-
-SET contador = contador + 1;
-
-SELECT customerNumber, checkNumber, amount, contador
+SET @row_number = 0;
+SELECT (@row_number:=@row_number + 1) AS row_number, customerNumber, checkNumber, amount
 FROM payments
 WHERE amount > (SELECT AVG(amount) FROM payments) * 2;
 END //
 DELIMITER ;
 /*Llamarlo*/
-CALL pagosMayoresPromedio1();
+CALL pagosPromedioEnu();
 
-/*10 NUEVO*/
-DELIMITER //
-CREATE PROCEDURE pagosMayoresPromedio5(INOUT contador INT)
-BEGIN
-
-SET contador = contador + 1;
-
-SELECT contador, customerNumber, checkNumber, amount
-FROM payments
-WHERE amount > (SELECT AVG(amount) FROM payments) * 2;
-END //
-DELIMITER ;
-/*Llamarlo*/
-SET @contador = 0;
-CALL pagosMayoresPromedio5(@contador);

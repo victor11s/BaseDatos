@@ -11,18 +11,16 @@ CALL margenBeneficio();
 
 /*12.Cuántos productos distintos vende classicmodels, lo cambie parea usar out*/
 DELIMITER //
-CREATE PROCEDURE productosDistintos(
-OUT cantidad INT
+CREATE PROCEDURE productoClassicM(
+    IN vendor VARCHAR(100)
 )
-BEGIN
-SELECT COUNT(DISTINCT productCode) INTO cantidad
-FROM products;
+BEGIN 
+SELECT COUNT(DISTINCT productCode) AS 'TOTAL DE PRODUCTOS'
+FROM products
+WHERE productVendor = vendor;
 END //
 DELIMITER ;
-/*Llamarlo*/
-CALL productosDistintos(@cantidad);
-SELECT @cantidad;
-
+CALL productoClassicM('Classic Metal Creations');
 
 /*13.Muestre el nombre y la ciudad de los clientes que no tienen representantes de ventas.*/
 DELIMITER //
@@ -50,30 +48,30 @@ CALL employeesWithVPorManager();
 
 /*15.Qué pedidos tienen un valor superior a $ 5,000 */
 DELIMITER //
-CREATE PROCEDURE ordenesMayoresDeDinero(
+CREATE PROCEDURE ordenesMayoresDeDineroQue(
 IN monto DECIMAL(10,2)
 )
 BEGIN
 SELECT orderNumber, orderDate
 FROM orders, customers, payments
-WHERE orders.customerNumber = customers.customerNumber and payments.customerNumber = customers.customerNumber and payments.amount > monto;
+WHERE orders.customerNumber = customers.customerNumber and payments.customerNumber = customers.customerNumber and payments.amount > monto
+GROUP BY orderNumber;
 END //
 DELIMITER ;
 /*Llamarlo*/
-CALL ordenesMayoresDeDinero(5000);
+CALL ordenesMayoresDeDineroQue(5000);
 
 /*16.Listar todos los productos comprados por Herkku Gifts.---DA ERROR NO ME TRAE A NADIE*/
 DELIMITER //
 CREATE PROCEDURE productosCompradosPor(
-IN customerName VARCHAR(50)
-)
+	IN comprador VARCHAR(100))
 BEGIN
-SELECT productName, customerName
-FROM products, customers, orders, orderdetails
-WHERE customers.customerName = orders.customerNumber and orders.orderNumber = orderdetails.orderNumber and orderdetails.productCode = products.productCode and customers.customerName = customerName;
+	SELECT orderdetails.orderNumber, orderdetails.productCode, products.productName, quantityOrdered, priceEach,(quantityOrdered*priceEach) AS 'Total'
+	FROM customers NATURAL JOIN orders NATURAL JOIN orderdetails NATURAL JOIN products
+	WHERE customerName = comprador AND orderdetails.productCode = products.productCode;
 END //
 DELIMITER ;
-/*Llamarlo*/
+
 CALL productosCompradosPor('Herkku Gifts');
 
 /*17.Mostrar el numero y nombre del representante, es decir el SalesRepEmployeenumber de cuenta de cada uno de los cliente y tambien mostrar el nombre del cliente*/
@@ -82,7 +80,8 @@ CREATE PROCEDURE numeroNombreRepresentante()
 BEGIN
 SELECT customers.customerName AS 'Nombre Cliente', employees.employeeNumber AS 'Numero Representante', CONCAT(employees.firstName, ' ', employees.lastName) AS 'Nombre Representante'
 FROM customers, employees
-WHERE customers.salesRepEmployeeNumber = employees.employeeNumber;
+WHERE customers.salesRepEmployeeNumber = employees.employeeNumber
+ORDER BY customerName;
 END //
 DELIMITER ;
 /*Llamarlo*/

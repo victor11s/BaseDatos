@@ -20,7 +20,7 @@ IN nombre VARCHAR(50)
 BEGIN
 SELECT firstName, lastName
 FROM employees
-WHERE firstName = nombre;
+WHERE firstName = nombre ;
 END //
 DELIMITER ;
 /*Llamarlo*/
@@ -56,16 +56,17 @@ CALL productosConCodigo2('S700');
 /*33.Liste los nombres de los empleados llamados Larry o Barry.*/
 DELIMITER //
 CREATE PROCEDURE empleadosConNombre2(
-IN nombre VARCHAR(50)
+IN nombre VARCHAR(50),
+IN nombre2 VARCHAR(50)
 )
 BEGIN
 SELECT firstName, lastName
 FROM employees
-WHERE firstName = nombre;
+WHERE firstName = nombre OR firstName = nombre2;
 END //
 DELIMITER ;
 /*Llamarlo*/
-CALL empleadosConNombre2('Larry');
+CALL empleadosConNombre2('Larry', 'Barry');
 
 /*34.Liste los nombres de los empleados con caracteres no alfabéticos en sus nombres.*/
 DELIMITER //

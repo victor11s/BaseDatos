@@ -395,3 +395,29 @@ END //
 DELIMITER ;
 /*Llamarlo*/
 CALL empleadosConNombre2('Larry', 'Barry');
+
+/*34.Liste los nombres de los empleados con caracteres no alfabéticos en sus nombres.*/
+DELIMITER //
+CREATE PROCEDURE empleadosConCaracteresNoAlfabeticos()
+BEGIN
+SELECT firstName, lastName
+FROM employees
+WHERE firstName REGEXP '[^a-zA-Z]';
+END //
+DELIMITER ;
+/*Llamarlo*/
+CALL empleadosConCaracteresNoAlfabeticos();
+
+/*35.Liste los vendedores cuyo nombre termina en Diecast*/
+DELIMITER //
+CREATE PROCEDURE vendedoresCon(
+IN terminacion VARCHAR(50)
+)
+BEGIN
+SELECT productVendor
+FROM products
+WHERE productVendor LIKE CONCAT('%', terminacion);
+END //
+DELIMITER ;
+/*Llamarlo*/
+CALL vendedoresCon('Diecast');

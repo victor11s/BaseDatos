@@ -82,17 +82,17 @@ CALL empleadosConCaracteresNoAlfabeticos();
 
 /*35.Liste los vendedores cuyo nombre termina en Diecast*/
 DELIMITER //
-CREATE PROCEDURE empleadosConNombre3(
+CREATE PROCEDURE vendedoresCon(
 IN terminacion VARCHAR(50)
 )
 BEGIN
-SELECT firstName, lastName
-FROM employees
-WHERE lastName LIKE CONCAT('%', terminacion);
+SELECT productVendor
+FROM products
+WHERE productVendor LIKE CONCAT('%', terminacion);
 END //
 DELIMITER ;
 /*Llamarlo*/
-CALL empleadosConNombre3('Diecast');
+CALL vendedoresCon('Diecast');
 
 /*36.Para pedidos que contengan más de dos productos, muestre aquellos productos que constituyan más del 50% del valor del pedido*/
 DELIMITER //
